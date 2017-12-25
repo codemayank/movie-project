@@ -6,12 +6,15 @@ myApp.controller('mainController', ['$http', function($http){
 
 	//create a context
 	const main = this;
+	//this.main variable will get the movie title entered in the search bar and we will use it to find movie info using OMDB API
 	this.name = "Enter the movie title you want to search here!";
+	this.shouldShowDiv = false;
 
+	//OMDB api url for searching URL requires us to repleace the white space in the given string with the + symbol. I have used a simple regex to implement this.
 	this.getMovieName = function(inputstring){
 		const outputString = inputstring.replace(/\s/g, "+");
 		return outputString;
-	}
+	}//End of getmovieName function
 	
 	this.loadMovie = function(baseUrl){
 
@@ -50,10 +53,11 @@ myApp.controller('mainController', ['$http', function($http){
 		console.log(this.name);
 		const modifiedMovieName = this.getMovieName(this.name);
 		console.log(modifiedMovieName);
-		const baseUrl = 'http://www.omdbapi.com/?t='+ modifiedMovieName + '&apikey=664329d7';
+		const baseUrl = 'http://www.omdbapi.com/?t='+ modifiedMovieName + '&apikey=';
 		console.log(baseUrl);	
 		main.loadMovie(baseUrl);
-	};//end of submiSearch function
+		main.shouldShowDiv = !main.shouldShowDiv;
+	};//end of submitSearch function
 
 }]); //end of mainController
 
